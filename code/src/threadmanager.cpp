@@ -3,7 +3,12 @@
 #include <iostream>
 
 #include "threadmanager.h"
+
+#include <QMainWindow>
+#include <qthread.h>
+
 #include "mythread.h"
+#include "pcosynchro/pcothread.h"
 
 
 
@@ -18,17 +23,33 @@ ThreadManager::ThreadManager(QObject *parent) :
  * @param nbThreads le nombre de threads à lancer
  * @return séquence triée
  */
-std::vector<int> ThreadManager::startSorting(
-        std::vector<int> seq,
-        unsigned int nbThreads
-)
-{
+std::vector<int> ThreadManager::startSorting(std::vector<int> seq,unsigned int nbThreads){
     finished = false;
-    
-    // TODO création des threads et du vecteur de résultats
-    // TODO lancement des threads avec la fonction Bogosort
+
+    std::vector<std::unique_ptr<PcoThread>> thread_list;
+    std::vector<int> result;
+
+    // DONE création des threads et du vecteur de résultats
+    // DONE lancement des threads avec la fonction Bogosort
     // TODO arrêt des threads et récupération du tableau trié
-    // TODO retourner le tableau trié
+    // DONE retourner le tableau trié
+
+    for(unsigned i = 0; i < nbThreads; ++i) {
+            PcoThread *currentThread = new PcoThread(bogosort,seq, this);
+            thread_list.push_back(std::unique_ptr<PcoThread>(currentThread));
+    }
+
+    while(!finished){}
+
+    for(unsigned i = 0; i < nbThreads; ++i) {
+        thread_list[i]->requestStop();
+    }
+
+    //sleep 5s
+     QThread::sleep(5);
+
+
+    return result;
 }
 
 
