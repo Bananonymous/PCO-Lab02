@@ -23,7 +23,7 @@
  * @param seq séquence à trier
  * @param pManager Pointeur sur le ThreadManager utilisé pour accéder à l'interface
  */
-void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* soluce, size_t range_begin, size_t range_end /* TODO */);
+void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* soluce, size_t range_begin, size_t range_end, size_t nbThreads);
 
 std::vector<int> get_permutation(std::vector<int> seq, size_t k);
 

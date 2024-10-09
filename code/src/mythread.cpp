@@ -3,10 +3,10 @@
 #include <iostream>
 #include <algorithm>
 
-void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* soluce, size_t range_begin, size_t range_end/* TODO */)
+void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* soluce, size_t range_begin, size_t range_end, size_t nbThreads)
 {
     // TODO if seq already sorted
-
+    double increment = 1./(range_end - range_begin + 1)/nbThreads;
 
     std::vector<int> temp;
     for(;range_begin <= range_end; range_begin++){
@@ -19,33 +19,16 @@ void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* s
 
         if(is_sorted(temp.begin(),temp.end())){
             *soluce = temp;
-            pManager->incrementPercentComputed(1);
+            pManager->sig_incrementPercentComputed(1);
             pManager->finished=true;
             break;
         }
+
+        pManager->incrementPercentComputed(increment);
     }
 
 
-    // Exemple de mise à jour de la barre de progression
-
 }
-
-/*
-function getPermutation(sequence: List[int], k: int) -> List[int]:
-    n = length of sequence
-    permutation = []               # To store the k-th permutation
-    availableElements = sequence    # Copy of the original sequence
-
-    for i from 0 to n-1:
-        fact = factorial(n - 1 - i)      # Calculate (n-1)! to determine the block size
-        index = k / fact                 # Determine which element to select
-        select the element at position 'index' from availableElements
-        remove the selected element from availableElements
-        append the selected element to permutation
-        k = k % fact                     # Update k to find the next element
-
-    return permutation
-*/
 
 std::vector<int> get_permutation(std::vector<int> seq, size_t k){
     size_t n = seq.size() -1;
