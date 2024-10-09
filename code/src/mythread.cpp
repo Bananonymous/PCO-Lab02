@@ -19,14 +19,15 @@ void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* s
 
         if(is_sorted(temp.begin(),temp.end())){
             *soluce = temp;
+            pManager->incrementPercentComputed(1);
+            pManager->finished=true;
             break;
         }
     }
 
 
     // Exemple de mise à jour de la barre de progression
-    pManager->incrementPercentComputed(0.1);
-    pManager->finished=true;
+
 }
 
 /*

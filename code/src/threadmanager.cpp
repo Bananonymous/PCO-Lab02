@@ -52,11 +52,8 @@ std::vector<int> ThreadManager::startSorting(std::vector<int> seq,unsigned int n
 
     for(unsigned i = 0; i < nbThreads; ++i) {
         thread_list[i]->requestStop();
+        thread_list[i]->join();
     }
-
-    //sleep 5s
-     QThread::sleep(5);
-
 
     return result;
 }
