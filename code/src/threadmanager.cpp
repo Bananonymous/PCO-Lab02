@@ -34,8 +34,17 @@ std::vector<int> ThreadManager::startSorting(std::vector<int> seq,unsigned int n
     // TODO arrêt des threads et récupération du tableau trié
     // DONE retourner le tableau trié
 
+
+    size_t total_order=1;
+    for(unsigned i=1;i<= seq.size();i++){
+        total_order *=i;
+    }
+    size_t temp = total_order / nbThreads;
+
+
+
     for(unsigned i = 0; i < nbThreads; ++i) {
-            PcoThread *currentThread = new PcoThread(bogosort,seq, this);
+            PcoThread *currentThread = new PcoThread(bogosort,seq, this,&result, i * temp, (i+1)*temp - 1);
             thread_list.push_back(std::unique_ptr<PcoThread>(currentThread));
     }
 

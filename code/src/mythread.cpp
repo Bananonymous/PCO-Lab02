@@ -10,11 +10,16 @@ void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* s
 
     std::vector<int> temp;
     for(;range_begin <= range_end; range_begin++){
+
+        if(PcoThread::thisThread()->stopRequested() ){
+            return;
+        }
+
         temp = get_permutation(seq,range_begin);
 
         if(is_sorted(temp.begin(),temp.end())){
             *soluce = temp;
-            return;
+            break;
         }
     }
 
