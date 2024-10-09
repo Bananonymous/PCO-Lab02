@@ -5,7 +5,6 @@
 
 void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* soluce, size_t range_begin, size_t range_end, size_t nbThreads)
 {
-    // TODO if seq already sorted
     double increment = 1./(range_end - range_begin + 1)/nbThreads;
 
     std::vector<int> temp;
@@ -19,15 +18,12 @@ void bogosort(std::vector<int> seq, ThreadManager* pManager, std::vector<int>* s
 
         if(is_sorted(temp.begin(),temp.end())){
             *soluce = temp;
-            pManager->sig_incrementPercentComputed(1);
             pManager->finished=true;
             break;
         }
 
         pManager->incrementPercentComputed(increment);
     }
-
-
 }
 
 std::vector<int> get_permutation(std::vector<int> seq, size_t k){
